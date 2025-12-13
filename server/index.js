@@ -85,6 +85,143 @@ app.get("/orders", async (req, res) => {
     }
 });
 
+// Create a new order
+app.post("/orders", async (req, res) => {
+    try {
+        const newOrder = new OrderModel(req.body);
+        await newOrder.save();
+
+        // If order is paid, deduct from stock
+        if (req.body.payment === 'Paid') {
+            const item = await ItemModel.findOne({ itemName: req.body.item });
+            if (item) {
+                const newRemaining = Math.max(0, item.remaining - (req.body.itemNumber || 1));
+                const newSold = item.sold + (req.body.itemNumber || 1);
+                await ItemModel.findByIdAndUpdate(item._id, {
+                    remaining: newRemaining,
+                    sold: newSold,
+                    status: newRemaining === 0 ? 'Out of Stock' : 'Available'
+                });
+            }
+        }
+
+        res.status(201).json({ message: "Order created successfully", order: newOrder });
+    } catch (error) {
+        res.status(500).json({ message: "Error creating order", error });
+    }
+});
+
+// Update an order
+app.put("/orders/:id", async (req, res) => {
+    try {
+        const orderId = req.params.id;
+        const existingOrder = await OrderModel.findById(orderId);
+
+        if (!existingOrder) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+
+        const oldPayment = existingOrder.payment;
+        const newPayment = req.body.payment;
+        const oldItemNumber = existingOrder.itemNumber || 1;
+        const newItemNumber = req.body.itemNumber || 1;
+        const oldItemName = existingOrder.item;
+        const newItemName = req.body.item;
+
+        // Handle stock changes based on payment status
+        // Case 1: Payment changed from Unpaid to Paid - deduct stock
+        if (oldPayment === 'Unpaid' && newPayment === 'Paid') {
+            const item = await ItemModel.findOne({ itemName: newItemName });
+            if (item) {
+                const newRemaining = Math.max(0, item.remaining - newItemNumber);
+                const newSold = item.sold + newItemNumber;
+                await ItemModel.findByIdAndUpdate(item._id, {
+                    remaining: newRemaining,
+                    sold: newSold,
+                    status: newRemaining === 0 ? 'Out of Stock' : 'Available'
+                });
+            }
+        }
+        // Case 2: Payment changed from Paid to Unpaid - restore stock
+        else if (oldPayment === 'Paid' && newPayment === 'Unpaid') {
+            const item = await ItemModel.findOne({ itemName: oldItemName });
+            if (item) {
+                const newRemaining = item.remaining + oldItemNumber;
+                const newSold = Math.max(0, item.sold - oldItemNumber);
+                await ItemModel.findByIdAndUpdate(item._id, {
+                    remaining: newRemaining,
+                    sold: newSold,
+                    status: newRemaining > 0 ? 'Available' : 'Out of Stock'
+                });
+            }
+        }
+        // Case 3: Still Paid but quantity or item changed
+        else if (oldPayment === 'Paid' && newPayment === 'Paid') {
+            // Restore old item's stock
+            if (oldItemName !== newItemName || oldItemNumber !== newItemNumber) {
+                const oldItem = await ItemModel.findOne({ itemName: oldItemName });
+                if (oldItem) {
+                    const restoredRemaining = oldItem.remaining + oldItemNumber;
+                    const restoredSold = Math.max(0, oldItem.sold - oldItemNumber);
+                    await ItemModel.findByIdAndUpdate(oldItem._id, {
+                        remaining: restoredRemaining,
+                        sold: restoredSold,
+                        status: restoredRemaining > 0 ? 'Available' : 'Out of Stock'
+                    });
+                }
+
+                // Deduct from new item
+                const newItem = await ItemModel.findOne({ itemName: newItemName });
+                if (newItem) {
+                    const newRemaining = Math.max(0, newItem.remaining - newItemNumber);
+                    const newSold = newItem.sold + newItemNumber;
+                    await ItemModel.findByIdAndUpdate(newItem._id, {
+                        remaining: newRemaining,
+                        sold: newSold,
+                        status: newRemaining === 0 ? 'Out of Stock' : 'Available'
+                    });
+                }
+            }
+        }
+
+        const updatedOrder = await OrderModel.findByIdAndUpdate(orderId, req.body, { new: true });
+        res.status(200).json({ message: "Order updated successfully", order: updatedOrder });
+    } catch (error) {
+        res.status(500).json({ message: "Error updating order", error });
+    }
+});
+
+// Delete an order
+app.delete("/orders/:id", async (req, res) => {
+    try {
+        const orderId = req.params.id;
+        const order = await OrderModel.findById(orderId);
+
+        if (!order) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+
+        // If order was paid, restore the stock
+        if (order.payment === 'Paid') {
+            const item = await ItemModel.findOne({ itemName: order.item });
+            if (item) {
+                const newRemaining = item.remaining + (order.itemNumber || 1);
+                const newSold = Math.max(0, item.sold - (order.itemNumber || 1));
+                await ItemModel.findByIdAndUpdate(item._id, {
+                    remaining: newRemaining,
+                    sold: newSold,
+                    status: newRemaining > 0 ? 'Available' : 'Out of Stock'
+                });
+            }
+        }
+
+        await OrderModel.findByIdAndDelete(orderId);
+        res.status(200).json({ message: "Order deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting order", error });
+    }
+});
+
 
 app.get("/", (req, res) => {
     res.send("Inventory Management Server is running...");
