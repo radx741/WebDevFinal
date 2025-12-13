@@ -1,0 +1,111 @@
+.about-page {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.about-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 50px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  /* subtle shadow */
+}
+
+.about-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #343a40;
+}
+
+.about-text {
+  font-size: 1.25rem;
+  line-height: 1.9;
+  color: #495057;
+}
+
+.goal-section h3,
+.vision-section h3 {
+  font-weight: 600;
+}
+
+.text-primary {
+  color: #0d6efd !important;
+}
+
+.text-warning {
+  color: #ffc107 !important;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .about-page {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .about-card {
+    padding: 30px 20px;
+    border-radius: 15px;
+  }
+
+  .about-title {
+    font-size: 2.2rem;
+  }
+
+  .about-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+
+  .goal-section h3,
+  .vision-section h3 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-page {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .about-card {
+    padding: 20px 15px;
+    border-radius: 12px;
+  }
+
+  .about-title {
+    font-size: 1.8rem;
+  }
+
+  .about-text {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .goal-section h3,
+  .vision-section h3 {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .about-card {
+    padding: 15px 12px;
+  }
+
+  .about-title {
+    font-size: 1.6rem;
+  }
+
+  .about-text {
+    font-size: 0.95rem;
+  }
+
+  .goal-section h3,
+  .vision-section h3 {
+    font-size: 1.1rem;
+  }
+}

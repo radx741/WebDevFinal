@@ -1,0 +1,300 @@
+/* Container */
+.register-container {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  /* horizontal centering */
+  align-items: center;
+  /* vertical centering */
+  font-family: 'Poppins', sans-serif;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* Card */
+.register-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 4rem 3rem;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  width: 800px;
+  max-width: 95vw;
+  min-height: 650px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* vertical alignment inside card */
+  align-items: center;
+  /* horizontal alignment inside card */
+
+  text-align: center;
+  animation: fadeIn 0.6s ease-in-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.register-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.25);
+}
+
+/* Form adjustments */
+.register-card form {
+  width: 80%;
+  /* 80% of card width */
+  max-width: 650px;
+  /* prevent too wide on large screens */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* center elements horizontally */
+  margin: 0 auto;
+  /* center form inside card */
+}
+
+/* Title */
+.register-title {
+  font-weight: 700;
+  color: #1c1f2a;
+  margin-bottom: 2.5rem;
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+}
+
+/* Alert */
+.alert {
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+}
+
+/* Input adjustments */
+.input-group {
+  position: relative;
+  margin-bottom: 1.8rem;
+  width: 100%;
+  /* take full width of form */
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #555;
+  font-size: 22px;
+  z-index: 10;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 15px 15px 15px 50px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  color: #222;
+  box-sizing: border-box;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.input-group input::placeholder {
+  color: #888;
+}
+
+.input-group input:focus {
+  border-color: #4b3c8e;
+  outline: none;
+  background-color: #fff;
+  box-shadow: 0 0 12px rgba(75, 60, 142, 0.2);
+}
+
+/* Button */
+.signup-btn {
+  width: 100%;
+  /* button fills form width */
+  margin-top: 2.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  border: none;
+  transition: all 0.3s ease;
+  font-size: 18px;
+  padding: 14px 0;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #4b3c8e, #372c70);
+  color: #fff;
+}
+
+.signup-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #372c70, #4b3c8e);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Paragraph */
+.register-card p {
+  margin-top: 1.5rem;
+  font-size: 15px;
+  color: #555;
+}
+
+.register-card p a {
+  color: #4b3c8e;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.register-card p a:hover {
+  text-decoration: underline;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .register-container {
+    padding: 0.5rem;
+  }
+
+  .register-card {
+    width: 90%;
+    padding: 2.5rem 1.5rem;
+    min-height: auto;
+    border-radius: 20px;
+  }
+
+  .register-card form {
+    width: 100%;
+  }
+
+  .register-title {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .input-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .input-icon {
+    font-size: 20px;
+    left: 12px;
+  }
+
+  .input-group input {
+    padding: 13px 13px 13px 45px;
+    font-size: 15px;
+  }
+
+  .signup-btn {
+    margin-top: 2rem;
+    font-size: 17px;
+    padding: 13px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-container {
+    padding: 0.5rem;
+  }
+
+  .register-card {
+    padding: 2rem 1.2rem;
+    min-height: auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .register-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .register-card form {
+    width: 100%;
+  }
+
+  .register-title {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .input-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .input-icon {
+    font-size: 18px;
+    left: 12px;
+  }
+
+  .input-group input {
+    padding: 12px 12px 12px 42px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+
+  .signup-btn {
+    margin-top: 1.5rem;
+    font-size: 16px;
+    padding: 12px 0;
+    border-radius: 10px;
+  }
+
+  .register-card p {
+    margin-top: 1.2rem;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  .register-card {
+    padding: 1.5rem 1rem;
+  }
+
+  .register-title {
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .input-group {
+    margin-bottom: 1rem;
+  }
+
+  .input-icon {
+    font-size: 16px;
+    left: 10px;
+  }
+
+  .input-group input {
+    padding: 10px 10px 10px 38px;
+    font-size: 13px;
+  }
+
+  .signup-btn {
+    margin-top: 1.2rem;
+    font-size: 15px;
+    padding: 11px 0;
+  }
+
+  .register-card p {
+    font-size: 13px;
+  }
+}

@@ -1,0 +1,321 @@
+.orders-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.orders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.orders-header h2 {
+    color: #2c3e50;
+    font-weight: 700;
+}
+
+.btn-new-order {
+    background-color: #483ea8;
+    border-color: #483ea8;
+    color: white;
+    font-weight: 600;
+}
+
+.btn-new-order:hover {
+    background-color: #3b328b;
+    border-color: #3b328b;
+}
+
+.orders-overview-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.orders-overview-header {
+    background-color: #dcdceb;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #2c3e50;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.orders-overview-header svg {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+.orders-table th {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    font-weight: 600;
+    border-top: none;
+    white-space: nowrap;
+}
+
+.orders-table td {
+    vertical-align: middle;
+    color: #495057;
+    white-space: nowrap;
+}
+
+.badge-base {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 80px;
+    justify-content: center;
+}
+
+.status-delivered {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.payment-paid {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.payment-unpaid {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: #6c757d;
+    font-size: 1.1em;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.action-btn:hover {
+    color: #483ea8;
+}
+
+/* Modal Styles */
+.modal-header {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.modal-title {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.modal-body {
+    padding-top: 10px;
+}
+
+.form-label {
+    font-weight: 600;
+    font-size: 0.9em;
+    color: #495057;
+}
+
+.btn-modal-action {
+    background-color: #483ea8;
+    border-color: #483ea8;
+    width: 100%;
+    font-weight: 600;
+    padding: 10px;
+}
+
+.btn-modal-action:hover {
+    background-color: #3b328b;
+    border-color: #3b328b;
+}
+
+.modal-delete-content {
+    text-align: center;
+    padding: 20px;
+}
+
+.modal-delete-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-delete-confirm {
+    background-color: #483ea8;
+    color: white;
+    border: none;
+    padding: 8px 30px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.btn-delete-cancel {
+    background-color: white;
+    color: #483ea8;
+    border: 1px solid #483ea8;
+    padding: 8px 30px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .orders-container {
+        padding: 15px;
+    }
+
+    .orders-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .orders-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .btn-new-order {
+        width: 100%;
+    }
+
+    .orders-overview-card {
+        border-radius: 8px;
+    }
+
+    .orders-overview-header {
+        padding: 12px 15px;
+        font-size: 0.95rem;
+    }
+
+    /* Make table scrollable horizontally */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .orders-table th,
+    .orders-table td {
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+
+    .badge-base {
+        font-size: 0.8em;
+        padding: 4px 8px;
+        min-width: 70px;
+    }
+
+    .action-btn {
+        font-size: 1rem;
+        margin: 0 3px;
+    }
+}
+
+@media (max-width: 480px) {
+    .orders-container {
+        padding: 10px;
+    }
+
+    .orders-header {
+        gap: 12px;
+    }
+
+    .orders-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .btn-new-order {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+
+    .orders-overview-header {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+
+    .orders-overview-header svg {
+        font-size: 1em;
+    }
+
+    .orders-table th,
+    .orders-table td {
+        font-size: 0.8rem;
+        padding: 6px;
+    }
+
+    .badge-base {
+        font-size: 0.75em;
+        padding: 4px 6px;
+        min-width: 60px;
+        gap: 3px;
+    }
+
+    .action-btn {
+        font-size: 0.95rem;
+        margin: 0 2px;
+    }
+
+    /* Modal adjustments */
+    .modal-body {
+        padding: 15px;
+    }
+
+    .form-label {
+        font-size: 0.85em;
+    }
+
+    .btn-modal-action {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .modal-delete-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-delete-confirm,
+    .btn-delete-cancel {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 360px) {
+    .orders-container {
+        padding: 8px;
+    }
+
+    .orders-header h2 {
+        font-size: 1.2rem;
+    }
+
+    .orders-table th,
+    .orders-table td {
+        font-size: 0.75rem;
+        padding: 5px;
+    }
+
+    .badge-base {
+        font-size: 0.7em;
+        padding: 3px 5px;
+        min-width: 55px;
+    }
+}

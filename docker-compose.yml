@@ -1,0 +1,43 @@
+
+version: '3.8'
+
+services:
+  server:
+    build: ./inventory-server
+    container_name: inventory-server
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb://mongo:27017/inventory
+      - FRONTEND_URL=http://localhost:3000
+    depends_on:
+      - mongo
+    volumes:
+      - ./inventory-server:/app
+      - /app/node_modules
+
+  client:
+    build: ./inventory-client
+    container_name: inventory-client
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./inventory-client/src:/app/src
+      - ./inventory-client/public:/app/public
+    stdin_open: true
+    tty: true
+
+  mongo:
+    image: mongo:latest
+    container_name: inventory-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
