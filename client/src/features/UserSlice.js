@@ -4,7 +4,7 @@ import axios from "axios";
 // Thunk for login
 export const getUser = createAsyncThunk("users/getUser", async (udata, { rejectWithValue }) => {
   try {
-    const baseUrl = process.env.REACT_APP_API_URL || "https://inventory-server-8obb.onrender.com";
+    const baseUrl =  "https://server-noo7.onrender.com";
     const response = await axios.post(`${baseUrl}/login`, udata);
     return response.data;
   } catch (error) {
@@ -17,7 +17,7 @@ export const getUser = createAsyncThunk("users/getUser", async (udata, { rejectW
 
 export const addUser = createAsyncThunk("users/addUser", async (udata, { rejectWithValue }) => {
   try {
-    const baseUrl = process.env.REACT_APP_API_URL || "https://inventory-server-8obb.onrender.com";
+    const baseUrl = "https://server-noo7.onrender.com";
     const response = await axios.post(`${baseUrl}/register`, udata);
     return response.data;
   } catch (error) {

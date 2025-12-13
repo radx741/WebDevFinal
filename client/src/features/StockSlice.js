@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const fetchItems = createAsyncThunk("stock/fetchItems", async () => {
     try {
-        const baseUrl = process.env.REACT_APP_API_URL || "https://inventory-server-8obb.onrender.com";
+        const baseUrl ="https://server-noo7.onrender.com";
         const response = await axios.get(`${baseUrl}/items`);
         return response.data;
     } catch (error) {
