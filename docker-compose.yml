@@ -1,10 +1,8 @@
-
 version: '3.8'
 
 services:
   server:
-    build: ./inventory-server
-    container_name: inventory-server
+    build: ./server
     ports:
       - "5000:5000"
     environment:
@@ -14,30 +12,39 @@ services:
     depends_on:
       - mongo
     volumes:
-      - ./inventory-server:/app
+      - ./server:/app
       - /app/node_modules
+    networks:
+      - app-network
 
   client:
-    build: ./inventory-client
-    container_name: inventory-client
+    build: ./client
     ports:
       - "3000:3000"
     environment:
       - REACT_APP_API_URL=http://localhost:5000
       - CHOKIDAR_USEPOLLING=true
+      - WDS_SOCKET_PORT=0
     volumes:
-      - ./inventory-client/src:/app/src
-      - ./inventory-client/public:/app/public
+      - ./client:/app
+      - /app/node_modules
     stdin_open: true
     tty: true
+    networks:
+      - app-network
 
   mongo:
     image: mongo:latest
-    container_name: inventory-mongo
     ports:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   mongo-data:
