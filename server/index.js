@@ -75,6 +75,77 @@ app.get("/items", async (req, res) => {
     }
 });
 
+// Create a new item
+app.post("/items", async (req, res) => {
+    try {
+        const { itemName, initial, sold, itemLocation } = req.body;
+        const remaining = Math.max(0, (initial || 0) - (sold || 0));
+        const status = remaining > 0 ? 'Available' : 'Out of Stock';
+
+        const newItem = new ItemModel({
+            itemName,
+            initial: initial || 0,
+            sold: sold || 0,
+            remaining,
+            status,
+            itemLocation
+        });
+
+        await newItem.save();
+        res.status(201).json({ message: "Item created successfully", item: newItem });
+    } catch (error) {
+        res.status(500).json({ message: "Error creating item", error });
+    }
+});
+
+// Update an item
+app.put("/items/:id", async (req, res) => {
+    try {
+        const itemId = req.params.id;
+        const { itemName, initial, sold, itemLocation } = req.body;
+
+        const remaining = Math.max(0, (initial || 0) - (sold || 0));
+        const status = remaining > 0 ? 'Available' : 'Out of Stock';
+
+        const updatedItem = await ItemModel.findByIdAndUpdate(
+            itemId,
+            {
+                itemName,
+                initial: initial || 0,
+                sold: sold || 0,
+                remaining,
+                status,
+                itemLocation
+            },
+            { new: true }
+        );
+
+        if (!updatedItem) {
+            return res.status(404).json({ message: "Item not found" });
+        }
+
+        res.status(200).json({ message: "Item updated successfully", item: updatedItem });
+    } catch (error) {
+        res.status(500).json({ message: "Error updating item", error });
+    }
+});
+
+// Delete an item
+app.delete("/items/:id", async (req, res) => {
+    try {
+        const itemId = req.params.id;
+        const deletedItem = await ItemModel.findByIdAndDelete(itemId);
+
+        if (!deletedItem) {
+            return res.status(404).json({ message: "Item not found" });
+        }
+
+        res.status(200).json({ message: "Item deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting item", error });
+    }
+});
+
 
 app.get("/orders", async (req, res) => {
     try {

@@ -80,7 +80,7 @@ export const Stock = () => {
                 sold: parseInt(formData.sold) || 0,
                 itemLocation: formData.itemLocation,
             };
-            await axios.post('http://localhost:5000/items', newItem);
+            await axios.post('https://server-noo7.onrender.com/items', newItem);
             dispatch(fetchItems());
             toggleAdd();
         } catch (error) {
@@ -96,7 +96,7 @@ export const Stock = () => {
                 sold: parseInt(formData.sold) || 0,
                 itemLocation: formData.itemLocation,
             };
-            await axios.put(`http://localhost:5000/items/${currentItem._id}`, updatedItem);
+            await axios.put(`https://server-noo7.onrender.com/items/${currentItem._id}`, updatedItem);
             dispatch(fetchItems());
             toggleEdit(null);
         } catch (error) {
@@ -106,7 +106,7 @@ export const Stock = () => {
 
     const handleDeleteItem = async () => {
         try {
-            await axios.delete(`http://localhost:5000/items/${currentItem._id}`);
+            await axios.delete(`https://server-noo7.onrender.com/items/${currentItem._id}`);
             dispatch(fetchItems());
             toggleDelete(null);
         } catch (error) {
