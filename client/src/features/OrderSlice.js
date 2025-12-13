@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = ( 'https://server-noo7.onrender.com') + '/orders';
+const API_URL = 'https://server-noo7.onrender.com/orders';
 
 // Async Thunks
 export const fetchOrders = createAsyncThunk('orders/fetchOrders', async () => {
