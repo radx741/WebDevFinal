@@ -75,7 +75,7 @@ app.get("/items", async (req, res) => {
     }
 });
 
-// Create a new item
+
 app.post("/items", async (req, res) => {
     try {
         const { itemName, initial, sold, itemLocation } = req.body;
@@ -98,7 +98,7 @@ app.post("/items", async (req, res) => {
     }
 });
 
-// Update an item
+
 app.put("/items/:id", async (req, res) => {
     try {
         const itemId = req.params.id;
@@ -130,7 +130,7 @@ app.put("/items/:id", async (req, res) => {
     }
 });
 
-// Delete an item
+
 app.delete("/items/:id", async (req, res) => {
     try {
         const itemId = req.params.id;
@@ -156,13 +156,12 @@ app.get("/orders", async (req, res) => {
     }
 });
 
-// Create a new order
+
 app.post("/orders", async (req, res) => {
     try {
         const newOrder = new OrderModel(req.body);
         await newOrder.save();
 
-        // If order is paid, deduct from stock
         if (req.body.payment === 'Paid') {
             const item = await ItemModel.findOne({ itemName: req.body.item });
             if (item) {
@@ -182,7 +181,7 @@ app.post("/orders", async (req, res) => {
     }
 });
 
-// Update an order
+
 app.put("/orders/:id", async (req, res) => {
     try {
         const orderId = req.params.id;
@@ -199,8 +198,7 @@ app.put("/orders/:id", async (req, res) => {
         const oldItemName = existingOrder.item;
         const newItemName = req.body.item;
 
-        // Handle stock changes based on payment status
-        // Case 1: Payment changed from Unpaid to Paid - deduct stock
+
         if (oldPayment === 'Unpaid' && newPayment === 'Paid') {
             const item = await ItemModel.findOne({ itemName: newItemName });
             if (item) {
@@ -213,7 +211,7 @@ app.put("/orders/:id", async (req, res) => {
                 });
             }
         }
-        // Case 2: Payment changed from Paid to Unpaid - restore stock
+
         else if (oldPayment === 'Paid' && newPayment === 'Unpaid') {
             const item = await ItemModel.findOne({ itemName: oldItemName });
             if (item) {
@@ -226,9 +224,9 @@ app.put("/orders/:id", async (req, res) => {
                 });
             }
         }
-        // Case 3: Still Paid but quantity or item changed
+
         else if (oldPayment === 'Paid' && newPayment === 'Paid') {
-            // Restore old item's stock
+
             if (oldItemName !== newItemName || oldItemNumber !== newItemNumber) {
                 const oldItem = await ItemModel.findOne({ itemName: oldItemName });
                 if (oldItem) {
@@ -241,7 +239,7 @@ app.put("/orders/:id", async (req, res) => {
                     });
                 }
 
-                // Deduct from new item
+
                 const newItem = await ItemModel.findOne({ itemName: newItemName });
                 if (newItem) {
                     const newRemaining = Math.max(0, newItem.remaining - newItemNumber);
@@ -262,7 +260,7 @@ app.put("/orders/:id", async (req, res) => {
     }
 });
 
-// Delete an order
+
 app.delete("/orders/:id", async (req, res) => {
     try {
         const orderId = req.params.id;
@@ -272,7 +270,7 @@ app.delete("/orders/:id", async (req, res) => {
             return res.status(404).json({ message: "Order not found" });
         }
 
-        // If order was paid, restore the stock
+
         if (order.payment === 'Paid') {
             const item = await ItemModel.findOne({ itemName: order.item });
             if (item) {
