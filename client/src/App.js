@@ -20,7 +20,6 @@ function App() {
           <Home />
         </ProtectedRoute>
       }>
-        {/* Default page when entering /home */}
         <Route index element={<Dashboard />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="stock" element={<Stock />} />

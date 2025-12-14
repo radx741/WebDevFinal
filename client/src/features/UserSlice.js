@@ -1,10 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Thunk for login
 export const getUser = createAsyncThunk("users/getUser", async (udata, { rejectWithValue }) => {
   try {
-    const baseUrl =  "https://server-noo7.onrender.com";
+    const baseUrl = "https://server-noo7.onrender.com";
     const response = await axios.post(`${baseUrl}/login`, udata);
     return response.data;
   } catch (error) {
@@ -28,7 +27,6 @@ export const addUser = createAsyncThunk("users/addUser", async (udata, { rejectW
 }
 );
 
-// Load user from localStorage if available
 const getUserFromLocalStorage = () => {
   try {
     const savedUser = localStorage.getItem('user');
@@ -52,12 +50,10 @@ const UserSlice = createSlice({
   initialState,
   reducers: {
     resetUserState: (state) => {
-      // Only reset flags, NOT user data (to preserve session persistence)
       state.isLoading = false;
       state.isSuccess = false;
       state.isError = false;
       state.message = "";
-      // DO NOT clear user or localStorage here
     },
     logoutUser: (state) => {
       state.user = {};
@@ -65,7 +61,6 @@ const UserSlice = createSlice({
       state.isSuccess = false;
       state.isError = false;
       state.message = "";
-      // Clear user from localStorage
       localStorage.removeItem('user');
     },
   },
@@ -82,7 +77,6 @@ const UserSlice = createSlice({
         state.isSuccess = true;
         state.user = action.payload.user;
         state.message = action.payload.message || "Login successful";
-        // Save user to localStorage
         try {
           localStorage.setItem('user', JSON.stringify(action.payload.user));
         } catch (error) {

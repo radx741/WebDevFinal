@@ -16,7 +16,6 @@ const Login = () => {
 
   const { user, isSuccess, isError, message, isLoading } = useSelector((state) => state.user);
 
-  //Reset flags when component loads
   useEffect(() => {
     dispatch(resetUserState());
   }, [dispatch]);

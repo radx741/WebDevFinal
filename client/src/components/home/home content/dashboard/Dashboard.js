@@ -25,7 +25,6 @@ export const Dashboard = () => {
     const orders = useSelector((state) => state.orders.orders);
     const canceledCount = useSelector((state) => state.orders.canceledCount);
 
-    // A) Stock Quantity Chart Data
     const stockData = useMemo(() => {
         if (!stockItems || stockItems.length === 0) return [];
         return stockItems.map((item) => ({
@@ -34,7 +33,6 @@ export const Dashboard = () => {
         }));
     }, [stockItems]);
 
-    // B) Orders by Status Data
     const ordersStatusData = useMemo(() => {
         if ((!orders || orders.length === 0) && !canceledCount) return [];
 
@@ -58,7 +56,6 @@ export const Dashboard = () => {
         }));
     }, [orders, canceledCount]);
 
-    // C) Orders Per Day Data
     const ordersPerDayData = useMemo(() => {
         if (!orders || orders.length === 0) return [];
 

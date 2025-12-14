@@ -24,12 +24,10 @@ export const Orders = () => {
     const { orders } = useSelector((state) => state.orders);
     const { stockItems } = useSelector((state) => state.stock);
 
-    // Modal States
     const [modalAdd, setModalAdd] = useState(false);
     const [modalEdit, setModalEdit] = useState(false);
     const [modalDelete, setModalDelete] = useState(false);
 
-    // Form/Selection State
     const [currentOrder, setCurrentOrder] = useState(null);
     const [formData, setFormData] = useState({
         customer: '',
@@ -46,7 +44,6 @@ export const Orders = () => {
         dispatch(fetchItems());
     }, [dispatch]);
 
-    // Toggles
     const toggleAdd = () => {
         setModalAdd(!modalAdd);
         setFormData({ customer: '', item: '', phone: '', status: '', address: '', payment: '', itemNumber: '' });
@@ -73,8 +70,6 @@ export const Orders = () => {
         setModalDelete(!modalDelete);
     };
 
-    
-    // Handlers
     const handleChange = (e) => {
         const { name, value } = e.target;
 
@@ -207,7 +202,6 @@ export const Orders = () => {
                 </Table>
             </Card>
 
-            {/* Add Order Modal */}
             <Modal isOpen={modalAdd} toggle={toggleAdd} centered size="lg">
                 <ModalHeader toggle={toggleAdd}>
                     <FaPlus style={{ marginRight: '10px' }} /> Add Order
@@ -302,7 +296,6 @@ export const Orders = () => {
                 </ModalBody>
             </Modal>
 
-            {/* Edit Order Modal */}
             <Modal isOpen={modalEdit} toggle={() => toggleEdit(null)} centered size="lg">
                 <ModalHeader toggle={() => toggleEdit(null)}>
                     <FaEdit style={{ marginRight: '10px' }} /> Edit Order
@@ -390,7 +383,6 @@ export const Orders = () => {
                 </ModalBody>
             </Modal>
 
-            {/* Delete Confirmation Modal */}
             <Modal isOpen={modalDelete} toggle={() => toggleDelete(null)} centered>
                 <ModalBody>
                     <div className="modal-delete-content">

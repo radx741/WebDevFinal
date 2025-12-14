@@ -19,7 +19,6 @@ export const Registeration = () => {
     (state) => state.user
   );
 
-  //Reset Redux state on component load
   useEffect(() => {
     dispatch(resetUserState());
   }, [dispatch]);

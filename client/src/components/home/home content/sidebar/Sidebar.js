@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Nav, NavItem, Button } from "reactstrap";
-import { NavLink as RouterNavLink, useNavigate } from "react-router-dom"; // <-- import NavLink from React Router
+import { NavLink as RouterNavLink, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../../../features/UserSlice";
 import {
   FaTachometerAlt,
@@ -35,7 +35,7 @@ const Sidebar = () => {
       <Nav vertical className="w-100 mt-4">
         <NavItem>
           <RouterNavLink
-            to="dashboard" // relative path to /home
+            to="dashboard"
             className="text-white sidebar-link"
             end
           >

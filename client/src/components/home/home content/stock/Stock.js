@@ -20,16 +20,13 @@ import axios from 'axios';
 import './Stock.css';
 
 export const Stock = () => {
-    // Data State
     const dispatch = useDispatch();
     const stockItems = useSelector((state) => state.stock.stockItems);
 
-    // Modal States
     const [modalAdd, setModalAdd] = useState(false);
     const [modalEdit, setModalEdit] = useState(false);
     const [modalDelete, setModalDelete] = useState(false);
 
-    // Form/Selection State
     const [currentItem, setCurrentItem] = useState(null);
     const [formData, setFormData] = useState({
         itemName: '',
@@ -42,7 +39,6 @@ export const Stock = () => {
         dispatch(fetchItems());
     }, [dispatch]);
 
-    // Toggles
     const toggleAdd = () => {
         setModalAdd(!modalAdd);
         setFormData({ itemName: '', initial: '', sold: '', itemLocation: 'Storage 1' });
@@ -66,7 +62,6 @@ export const Stock = () => {
         setModalDelete(!modalDelete);
     };
 
-    // Handlers
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -177,7 +172,6 @@ export const Stock = () => {
                 </Table>
             </Card>
 
-            {/* Add Item Modal */}
             <Modal isOpen={modalAdd} toggle={toggleAdd} centered size="lg">
                 <ModalHeader toggle={toggleAdd}>
                     <FaPlus style={{ marginRight: '10px' }} /> Add New Stock Item
@@ -256,7 +250,6 @@ export const Stock = () => {
                 </ModalBody>
             </Modal>
 
-            {/* Edit Item Modal */}
             <Modal isOpen={modalEdit} toggle={() => toggleEdit(null)} centered size="lg">
                 <ModalHeader toggle={() => toggleEdit(null)}>
                     <FaEdit style={{ marginRight: '10px' }} /> Edit Stock Item
@@ -335,7 +328,6 @@ export const Stock = () => {
                 </ModalBody>
             </Modal>
 
-            {/* Delete Confirmation Modal */}
             <Modal isOpen={modalDelete} toggle={() => toggleDelete(null)} centered>
                 <ModalBody>
                     <div className="modal-delete-content">

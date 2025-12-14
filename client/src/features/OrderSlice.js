@@ -3,7 +3,6 @@ import axios from 'axios';
 
 const API_URL = 'https://server-noo7.onrender.com/orders';
 
-// Async Thunks
 export const fetchOrders = createAsyncThunk('orders/fetchOrders', async () => {
     const response = await axios.get(API_URL);
     return response.data;
@@ -28,14 +27,13 @@ const orderSlice = createSlice({
     name: 'orders',
     initialState: {
         orders: [],
-        status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
+        status: 'idle',
         error: null,
         canceledCount: 0,
     },
     reducers: {},
     extraReducers: (builder) => {
         builder
-            // Fetch Orders
             .addCase(fetchOrders.pending, (state) => {
                 state.status = 'loading';
             })
@@ -47,18 +45,15 @@ const orderSlice = createSlice({
                 state.status = 'failed';
                 state.error = action.error.message;
             })
-            // Add Order
             .addCase(addOrder.fulfilled, (state, action) => {
                 state.orders.push(action.payload);
             })
-            // Update Order
             .addCase(updateOrder.fulfilled, (state, action) => {
                 const index = state.orders.findIndex((order) => order._id === action.payload._id);
                 if (index !== -1) {
                     state.orders[index] = action.payload;
                 }
             })
-            // Delete Order
             .addCase(deleteOrder.fulfilled, (state, action) => {
                 state.orders = state.orders.filter((order) => order._id !== action.payload);
                 state.canceledCount += 1;
